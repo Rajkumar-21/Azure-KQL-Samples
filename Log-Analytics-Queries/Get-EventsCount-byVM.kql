@@ -1,0 +1,6 @@
+Event
+| where Computer has_any ("VM1", "VM2", "VM3")
+| where TimeGenerated >= ago(3d)
+| summarize EventCount = count() by Computer
+| project Computer, EventCount
+| render barchart

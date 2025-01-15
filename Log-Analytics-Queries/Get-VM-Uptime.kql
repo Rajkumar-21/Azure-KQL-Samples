@@ -1,0 +1,7 @@
+Heartbeat
+| where Computer has_any ("VM1", "VM2", "VM3")
+| where TimeGenerated >= ago(30d)
+| summarize UptimeMinutes = count() * 1 by Computer
+| extend UptimeHours = UptimeMinutes / 60
+| extend UptimeDays = UptimeHours / 24
+| project Computer, UptimeMinutes, UptimeHours, UptimeDays

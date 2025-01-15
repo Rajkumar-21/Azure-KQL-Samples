@@ -1,0 +1,7 @@
+Event
+| where Computer has_any ("VM1", "VM2", "VM3")
+| where TimeGenerated >= ago(30d)
+| where EventLog in ("Security", "Application")  // Replace with your specific EventLogs
+| summarize EventCount = count() by bin(TimeGenerated, 1d), Computer, EventLog
+| project TimeGenerated, Computer, EventLog, EventCount
+| render timechart
